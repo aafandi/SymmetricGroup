@@ -8,10 +8,16 @@ class SymmetricGroup:
     def __repr__(self):
         return f"The symmetric group on {self.order} elements"
 
-    def construct(self, list_of_tuples):
-        return list_of_tuples
+    def __call__(self, list_of_tuples):
+        # TODO: Make a call function where one can instantiate #
+        # a permutation element
+
+    def __mul__(self, other):
+        # TODO: write a multiplication rule for two permutation elements #
 
 
 ### Run tests below ###
 
-G = SymmetricGroup(3); print(G.construct([(1,), (2,)]))
+
+
+
