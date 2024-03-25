@@ -1,5 +1,8 @@
 ### Code to mimic the SymmetricGroup class in Sagemath ###
 
+from itertools import permutations
+from math import factorial
+
 class SymmetricGroup:
 
     def __init__(self, n):
@@ -9,9 +12,9 @@ class SymmetricGroup:
         return f"The symmetric group on {self.order} elements"
 
     def __call__(self, list_of_tuples):
-        # TODO: Make a call function where one can instantiate #
+        # Makes a call function where one can instantiate #
         # a permutation element
-        pass
+        return list_of_tuples
 
     def __mul__(self, other):
         # TODO: write a multiplication rule for two permutation elements #
@@ -59,15 +62,47 @@ def multiply_permutations(p1, p2):
 
     return product
 
+def permutation_to_cycles(t):
+    ### Function that takes a tuple (\pi(i)), corresponding ###
+    ### to some permutation, and returns the permuutation   ###
+    ### in cycle notation, as a list of tuples              ###
+
+    input_to_list = []        # Turn input tuple to list
+    mapping_dictionary = {}   # The dictionary {i:pi(i)}, EXCLUDES FIXED POINTS
+    domain_indices = []       # List keeping track of beginning of two-cycles
+    list_of_cycles = []       # Desired output
+
+
+    for i in t:
+        input_to_list.append(i)
+
+    for input_output_pair in zip([i for i in range(1, len(t) + 1)], input_to_list):
+        if input_output_pair[0] != input_output_pair[1]:
+            mapping_dictionary[input_output_pair[0]] = input_output_pair[1]
+
+    for i in mapping_dictionary:
+        domain_indices.append(i)
+
+    while len(domain_indices) > 0:
+        cycle = [domain_indices[0], mapping_dictionary[domain_indices[0]]]
+        domain_indices.remove(domain_indices[0])
+        while cycle[0] != cycle[-1]:
+            cycle.append(mapping_dictionary[cycle[-1]])
+            domain_indices.remove(cycle[-2])
+        list_of_cycles.append(cycle)
+
+    for cycle in list_of_cycles:
+        cycle.pop(-1)
+
+    return list_of_cycles
 
 
 
 
 ### Run tests below ###
 
-a = [(1, 2, 3), (5, 4, 6)]
-b = [(2, 5), (4, 6), (1, 3)]
+for perm in permutations([1, 2, 3, 4]):
+    print(perm, permutation_to_cycles(perm))
 
-print(multiply_permutations(a, b))
 
 
