@@ -180,11 +180,6 @@ def dictionary_of_cycle_types(n, list_of_permutations):
 
 ### Run tests below ###
 
-G = SymmetricGroup(5)
-l = G.list_of_permutations
-perm = l[35]
-p = Permutation(5, perm)
-print(p.mapping, p.invert(as_cycles=True, as_mapping=False))
 
 
 
